@@ -13,29 +13,45 @@ class InputFlightView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inserir Novo Voo'),
+        title: Text('Inserir Novo Voo', style: TextStyle(color: Colors.white)),
+        backgroundColor: Color(0xFF003366),
       ),
-      body: SingleChildScrollView( // Adicionado para evitar overflow
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
               TextField(
                 controller: departureController,
-                decoration: InputDecoration(labelText: 'Ponto de Partida'),
+                decoration: InputDecoration(
+                  labelText: 'Ponto de Partida',
+                  labelStyle: TextStyle(color: Color(0xFF007BFF)),
+                  border: OutlineInputBorder(),
+                ),
                 onChanged: flightProvider.setDeparture,
               ),
+              SizedBox(height: 20),
               TextField(
                 controller: arrivalController,
-                decoration: InputDecoration(labelText: 'Ponto de Chegada'),
+                decoration: InputDecoration(
+                  labelText: 'Ponto de Chegada',
+                  labelStyle: TextStyle(color: Color(0xFF007BFF)),
+                  border: OutlineInputBorder(),
+                ),
                 onChanged: flightProvider.setArrival,
               ),
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
+                  if (departureController.text.isEmpty || arrivalController.text.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Por favor, preencha os campos de partida e chegada.')),
+                    );
+                    return;
+                  }
+
                   await flightProvider.fetchFlightData();
-                  
-                  // Chama o último voo cadastrado no histórico
+
                   final lastFlightIndex = flightProvider.flightHistory.length - 1;
                   if (lastFlightIndex >= 0) {
                     final lastFlightData = flightProvider.flightHistory[lastFlightIndex];
@@ -46,13 +62,20 @@ class InputFlightView extends StatelessWidget {
                       ),
                     );
                   } else {
-                    // Lógica para lidar com a ausência de voos
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Nenhum voo cadastrado.')),
                     );
                   }
                 },
                 child: Text('Buscar Dados do Voo'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF007BFF),
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
               ),
             ],
           ),
