@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart'; // Para mobile
-import 'dart:html' as html; // Para web
+//import 'dart:html' as html; // Para web
 
 class FlightProvider extends ChangeNotifier {
   String _departure = '';
@@ -56,7 +56,7 @@ class FlightProvider extends ChangeNotifier {
 
   Future<void> _saveFlightHistory() async {
     if (kIsWeb) {
-      html.window.localStorage['flightHistory'] = json.encode(_flightHistory);
+      //html.window.localStorage['flightHistory'] = json.encode(_flightHistory);
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('flightHistory', json.encode(_flightHistory));
@@ -65,13 +65,13 @@ class FlightProvider extends ChangeNotifier {
 
   Future<void> fetchFlightHistory() async {
     if (kIsWeb) {
-      String? historyString = html.window.localStorage['flightHistory'];
-      if (historyString != null) {
-        List<dynamic> historyList = json.decode(historyString);
-        _flightHistory = List<Map<String, dynamic>>.from(historyList);
-      } else {
-        _flightHistory = []; // Caso não haja histórico
-      }
+      // String? historyString = html.window.localStorage['flightHistory'];
+      // if (historyString != null) {
+      //   List<dynamic> historyList = json.decode(historyString);
+      //   _flightHistory = List<Map<String, dynamic>>.from(historyList);
+      // } else {
+      //   _flightHistory = []; // Caso não haja histórico
+      // }
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? historyString = prefs.getString('flightHistory');

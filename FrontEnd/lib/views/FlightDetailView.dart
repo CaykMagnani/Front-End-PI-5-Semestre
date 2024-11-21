@@ -68,14 +68,12 @@ class FlightDetailView extends StatelessWidget {
             Text('Duração: ${formatDuration(flightData['duration'])}', style: TextStyle(fontSize: 18)),
 
             // Exibe a previsão de status apenas se o voo estiver concluído
-            if (flightStatus == 'Voo Realizado') ...[
               SizedBox(height: 16),
               Text(
-                'Previsão de Status: ${predictFlightStatus()}',
+                'Previsão: ${predictFlightStatus()}',
                 style: TextStyle(fontSize: 18, color: Colors.blue),
               ),
             ],
-          ],
         ),
       ),
     );
