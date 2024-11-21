@@ -30,8 +30,16 @@ class FlightDetailView extends StatelessWidget {
       return '$hours hora${hours != 1 ? 's' : ''} e $minutes minuto${minutes != 1 ? 's' : ''}';
     }
 
+    // Função para prever o status do voo (mockado)
+    String predictFlightStatus() {
+      // Lógica mockada para previsão do status (aqui você pode adicionar lógica aleatória ou fixa)
+      final bool isCancelled = DateTime.now().minute % 2 == 0; // Exemplo simples (baseado no minuto atual)
+      return isCancelled ? 'Voo Cancelado' : 'Voo Realizado';
+    }
+
     // Use as informações de partida e chegada do flightData
     final flightName = '${flightData['departure']} Até ${flightData['arrival']}';
+    final flightStatus = flightData['status']; // Status real do voo
 
     return Scaffold(
       appBar: AppBar(
@@ -45,13 +53,28 @@ class FlightDetailView extends StatelessWidget {
           children: [
             Text('Voo: $flightName', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
             SizedBox(height: 12),
-            Text('Status: ${flightData['status'] ?? 'N/A'}', style: TextStyle(fontSize: 18)),
+            Text(
+              'Status: $flightStatus', 
+              style: TextStyle(
+                fontSize: 18, 
+                color: flightStatus == 'Voo Cancelado' ? Colors.red : Colors.green
+              ),
+            ),
             SizedBox(height: 8),
             Text('Data da Partida: ${formatDateTime(flightData['departureTime'])}', style: TextStyle(fontSize: 18)),
             SizedBox(height: 8),
             Text('Data da Chegada: ${formatDateTime(flightData['arrivalTime'])}', style: TextStyle(fontSize: 18)),
             SizedBox(height: 8),
             Text('Duração: ${formatDuration(flightData['duration'])}', style: TextStyle(fontSize: 18)),
+
+            // Exibe a previsão de status apenas se o voo estiver concluído
+            if (flightStatus == 'Voo Realizado') ...[
+              SizedBox(height: 16),
+              Text(
+                'Previsão de Status: ${predictFlightStatus()}',
+                style: TextStyle(fontSize: 18, color: Colors.blue),
+              ),
+            ],
           ],
         ),
       ),

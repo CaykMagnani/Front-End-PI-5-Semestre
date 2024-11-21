@@ -70,7 +70,7 @@ class FlightHistoryView extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Concluir Voo', style: TextStyle(color: Color(0xFF003366))),
+          title: Text('Relizar Previsão', style: TextStyle(color: Color(0xFF003366))),
           content: StatefulBuilder(
             builder: (context, setState) {
               return Column(
@@ -157,7 +157,7 @@ class FlightHistoryView extends StatelessWidget {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Datas inválidas!')));
                 }
               },
-              child: Text('Concluir', style: TextStyle(color: Color(0xFF007BFF))),
+              child: Text('Prever', style: TextStyle(color: Color(0xFF007BFF))),
             ),
           ],
         );
