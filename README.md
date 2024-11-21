@@ -1,6 +1,6 @@
 # **Flight Tracker App**
 
-Um aplicativo Flutter para gerenciar o histórico de voos, com funcionalidades de exibição de voos passados, detalhamento de informações e previsão de status de voos concluídos.
+Um aplicativo Flutter para gerenciar previsão de status de voos.
 
 ---
 
